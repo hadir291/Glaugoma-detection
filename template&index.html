@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détection de Glaucome</title>
+    <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Détection de Glaucome</h1>
+        <form id="uploadForm" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileInput" accept="image/*" required>
+            <button type="submit">Analyser</button>
+        </form>
+
+        <div class="result" style="display: none;">
+            <h2>Résultat :</h2>
+            <p id="analysisResult"></p>
+            <img id="uploadedImage" src="" alt="Image téléchargée">
+        </div>
+    </div>
+
+    <script>
+        // Simulation d'analyse avec un message dynamique
+        const form = document.getElementById('uploadForm');
+        const resultDiv = document.querySelector('.result');
+        const resultText = document.getElementById('analysisResult');
+        const uploadedImage = document.getElementById('uploadedImage');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Empêche la soumission réelle du formulaire
+
+            const fileInput = document.getElementById('fileInput');
+            if (fileInput.files.length === 0) {
+                alert("Veuillez sélectionner un fichier !");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            // Simulez le traitement du fichier et la détection du glaucome
+            reader.onload = () => {
+                // Affiche l'image téléchargée
+                uploadedImage.src = reader.result;
+
+                // Simule un résultat (à remplacer par votre logique réelle)
+                const hasGlaucoma = Math.random() < 0.5; // 50% de chance
+                resultText.textContent = hasGlaucoma
+                    ? "Le glaucome a été détecté. Veuillez consulter un spécialiste."
+                    : "Aucun signe de glaucome détecté. Continuez à prendre soin de vos yeux.";
+                resultText.style.color = hasGlaucoma ? "red" : "green";
+
+                // Affiche la section des résultats
+                resultDiv.style.display = "block";
+            };
+
+            reader.readAsDataURL(file); // Lis le fichier pour prévisualisation
+        });
+    </script>
+</body>
+</html>
